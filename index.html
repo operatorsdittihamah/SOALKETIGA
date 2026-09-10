@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galactic Math Quest - Soal Cerita Galaksi</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .stars-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: moveStar linear infinite;
+        }
+
+        @keyframes moveStar {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(100vh); opacity: 0.2; }
+        }
+
+        .nebula {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            z-index: 1;
+        }
+
+        .nebula-1 {
+            width: 350px;
+            height: 350px;
+            background: #8a2be2;
+            top: 10%;
+            left: 15%;
+            animation: pulse 8s infinite alternate;
+        }
+
+        .nebula-2 {
+            width: 400px;
+            height: 400px;
+            background: #00ffff;
+            bottom: 10%;
+            right: 15%;
+            animation: pulse 10s infinite alternate-reverse;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.3; }
+            100% { transform: scale(1.3); opacity: 0.6; }
+        }
+
+        .game-card {
+            position: relative;
+            z-index: 10;
+            background: rgba(13, 19, 33, 0.85);
+            backdrop-filter: blur(16px);
+            border: 2px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 35px rgba(0, 255, 255, 0.25), inset 0 0 15px rgba(138, 43, 226, 0.3);
+            border-radius: 24px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .header-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00ffff, #8a2be2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 0 15px #00ffff;
+            border: 2px solid #fff;
+        }
+
+        .stats-group {
+            text-align: right;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .stat-item {
+            font-size: 13px;
+            color: #a0aec0;
+        }
+
+        .stat-value {
+            color: #00ffff;
+            font-weight: bold;
+            font-size: 16px;
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.8);
+        }
+
+        .title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #00ffff, #ff007f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .progress-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: #ff007f;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .question-box {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.1);
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .question {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: #ffffff;
+            line-height: 1.6;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        .input-box, .select-box {
+            width: 100%;
+            padding: 14px;
+            font-size: 18px;
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            outline: none;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .select-box option {
+            background-color: #0d1321;
+            color: #fff;
+        }
+
+        .input-box:focus, .select-box:focus {
+            border-color: #00ffff;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #00ffff, #0072ff);
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.8);
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, #00ff88, #0072ff);
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+        }
+
+        .feedback {
+            margin-top: 15px;
+            font-weight: 600;
+            min-height: 24px;
+            font-size: 15px;
+        }
+
+        .feedback.correct {
+            color: #00ff88;
+            text-shadow: 0 0 10px #00ff88;
+        }
+
+        .feedback.wrong {
+            color: #ff3366;
+            text-shadow: 0 0 10px #ff3366;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .active-screen {
+            display: block;
+        }
+
+        .final-score {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 50px;
+            color: #00ffff;
+            text-shadow: 0 0 20px #00ffff;
+            margin: 15px 0;
+        }
+
+        .result-details {
+            font-size: 15px;
+            color: #d1d5db;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .saving-status {
+            font-size: 14px;
+            color: #00ffff;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+
+        .shake {
+            animation: shake 0.4s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars-container" id="starsContainer"></div>
+    <div class="nebula nebula-1"></div>
+    <div class="nebula nebula-2"></div>
+
+    <div class="game-card" id="gameCard">
+        
+        <!-- SCREEN 1: LOGIN -->
+        <div id="loginScreen" class="screen active-screen">
+            <div class="avatar" style="margin: 0 auto 15px auto; width: 70px; height: 70px; font-size: 36px;">📖</div>
+            <h1 class="title">SOAL CERITA GALAKSI</h1>
+            <p style="color: #a0aec0; margin-bottom: 20px; font-size: 14px;">Pilih namamu untuk memulai tantangan soal cerita!</p>
+            
+            <form id="loginForm" onsubmit="startGame(event)">
+                <select id="studentSelect" class="select-box" required>
+                    <option value="">-- Memuat Nama Siswa... --</option>
+                </select>
+                <button type="submit" class="btn btn-start" id="startBtn" disabled>Mulai Misi 🚀</button>
+            </form>
+            <div id="loginFeedback" style="margin-top: 10px; font-size: 13px; color: #ff007f;"></div>
+        </div>
+
+        <!-- SCREEN 2: GAMEPLAY -->
+        <div id="quizScreen" class="screen">
+            <div class="header-section">
+                <div class="avatar" id="avatarIcon">🚀</div>
+                <div class="stats-group">
+                    <div class="stat-item">SISWA: <span class="stat-value" id="displayName" style="font-size:12px;">-</span></div>
+                    <div class="stat-item">SKOR: <span class="stat-value" id="score">0</span> / 100</div>
+                </div>
+            </div>
+
+            <div class="progress-text" id="progressText">SOAL 1 DARI 20</div>
+
+            <div class="question-box">
+                <div class="question" id="questionText">Memuat soal cerita...</div>
+            </div>
+
+            <form id="quizForm" onsubmit="checkAnswer(event)">
+                <input 
+                    type="number" 
+                    id="answerInput" 
+                    class="input-box" 
+                    placeholder="Jawabanmu..." 
+                    autocomplete="off" 
+                    required 
+                />
+                <button type="submit" class="btn btn-submit" id="submitBtn">Kirim Jawaban 🛸</button>
+            </form>
+
+            <div class="feedback" id="feedbackText"></div>
+        </div>
+
+        <!-- SCREEN 3: HASIL -->
+        <div id="resultScreen" class="screen">
+            <div class="avatar" id="finalAvatar" style="margin: 0 auto 15px auto; width: 80px; height: 80px; font-size: 45px;">👑</div>
+            <h1 class="title">MISI SELESAI!</h1>
+            <p style="color: #a0aec0;">NILAI AKHIR KAMU:</p>
+            <div class="final-score" id="finalScore">0</div>
+            
+            <div class="result-details" id="resultDetails"></div>
+            <div class="saving-status" id="savingStatus">💾 Menyimpan skor ke Google Sheets...</div>
+        </div>
+
+    </div>
+
+    <script>
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyCU4vFsCSdKGHKyAaPTGcwh-CbEoAwLzB0ZeK4GHOGdEetypgYox-VFg_wwpIVtXtX7Q/exec";
+
+        const TOTAL_QUESTIONS = 20;
+        const POINTS_PER_QUESTION = 5;
+
+        let selectedStudentName = "";
+        let currentQuestion = 1;
+        let correctAnswer = 0;
+        let score = 0;
+        let correctCount = 0;
+
+        const avatars = ["🚀", "👨‍RGB", "🛸", "👾", "🤖", "🌟", "👑"];
+
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 3 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDuration = `${Math.random() * 5 + 3}s`;
+                container.appendChild(star);
+            }
+        }
+
+        async function fetchStudentNames() {
+            const selectElem = document.getElementById('studentSelect');
+            const startBtn = document.getElementById('startBtn');
+            const feedback = document.getElementById('loginFeedback');
+
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL);
+                const data = await response.json();
+
+                if (data.names && data.names.length > 0) {
+                    selectElem.innerHTML = '<option value="">-- Pilih Namamu --</option>';
+                    data.names.forEach(name => {
+                        const opt = document.createElement('option');
+                        opt.value = name;
+                        opt.textContent = name;
+                        selectElem.appendChild(opt);
+                    });
+                    startBtn.disabled = false;
+                } else {
+                    selectElem.innerHTML = '<option value="">-- Tidak Ada Nama Ditemukan --</option>';
+                    feedback.innerText = "Daftar nama di Google Sheets masih kosong!";
+                }
+            } catch (err) {
+                console.error(err);
+                selectElem.innerHTML = '<option value="">-- Gagal Memuat --</option>';
+                feedback.innerText = "Gagal terhubung ke Google Sheets. Periksa URL Apps Script.";
+            }
+        }
+
+        function startGame(event) {
+            event.preventDefault();
+            const selectElem = document.getElementById('studentSelect');
+            selectedStudentName = selectElem.value;
+
+            if (!selectedStudentName) return;
+
+            document.getElementById('displayName').innerText = selectedStudentName;
+            
+            document.getElementById('loginScreen').classList.remove('active-screen');
+            document.getElementById('quizScreen').classList.add('active-screen');
+
+            generateQuestion();
+        }
+
+        // Pembuat Soal Cerita Otomatis
+        function generateQuestion() {
+            const storyTypes = ['penjumlahan', 'pengurangan', 'perkalian', 'pembagian'];
+            const type = storyTypes[Math.floor(Math.random() * storyTypes.length)];
+            let storyText = "";
+
+            if (type === 'penjumlahan') {
+                let a = Math.floor(Math.random() * 40) + 10;
+                let b = Math.floor(Math.random() * 40) + 10;
+                correctAnswer = a + b;
+                const items = ["kristal luar angkasa", "bintang jatuh", "sampel batuan Mars", "foton energi"];
+                const item = items[Math.floor(Math.random() * items.length)];
+                storyText = `Kapten Robot menemukan <b>${a}</b> ${item} di Planet A dan <b>${b}</b> ${item} di Planet B. Berapa jumlah seluruh ${item} yang ditemukan?`;
+            } else if (type === 'pengurangan') {
+                let a = Math.floor(Math.random() * 50) + 30;
+                let b = Math.floor(Math.random() * 25) + 5;
+                correctAnswer = a - b;
+                storyText = `Stasiun antariksa memiliki pasokan <b>${a}</b> tabung oksigen. Jika <b>${b}</b> tabung telah digunakan, berapa sisa tabung oksigen sekarang?`;
+            } else if (type === 'perkalian') {
+                let a = Math.floor(Math.random() * 12) + 2;
+                let b = Math.floor(Math.random() * 8) + 2;
+                correctAnswer = a * b;
+                storyText = `Ada <b>${a}</b> roket peluncuran. Setiap roket membawa <b>${b}</b> astronot. Berapa total astronot yang diluncurkan?`;
+            } else if (type === 'pembagian') {
+                let b = Math.floor(Math.random() * 8) + 2;
+                let ans = Math.floor(Math.random() * 9) + 2;
+                let a = b * ans;
+                correctAnswer = ans;
+                storyText = `Sebanyak <b>${a}</b> makanan ruang angkasa akan dibagi rata kepada <b>${b}</b> alien. Berapa paket makanan yang diterima setiap alien?`;
+            }
+
+            document.getElementById('progressText').innerText = `SOAL ${currentQuestion} DARI ${TOTAL_QUESTIONS}`;
+            document.getElementById('questionText').innerHTML = storyText;
+            
+            const inputField = document.getElementById('answerInput');
+            inputField.value = '';
+            inputField.disabled = false;
+            inputField.focus();
+
+            document.getElementById('submitBtn').disabled = false;
+        }
+
+        function checkAnswer(event) {
+            event.preventDefault();
+
+            const inputField = document.getElementById('answerInput');
+            const submitBtn = document.getElementById('submitBtn');
+            const userInputValue = inputField.value;
+            const feedback = document.getElementById('feedbackText');
+            const gameCard = document.getElementById('gameCard');
+
+            if (userInputValue === "") return;
+
+            inputField.disabled = true;
+            submitBtn.disabled = true;
+
+            const userAnswer = parseInt(userInputValue);
+
+            if (userAnswer === correctAnswer) {
+                score += POINTS_PER_QUESTION;
+                correctCount += 1;
+                feedback.innerText = "✨ Jawaban Benar!";
+                feedback.className = "feedback correct";
+            } else {
+                feedback.innerText = "💥 Jawaban Kurang Tepat!";
+                feedback.className = "feedback wrong";
+
+                gameCard.classList.add('shake');
+                setTimeout(() => gameCard.classList.remove('shake'), 400);
+            }
+
+            document.getElementById('score').innerText = score;
+            updateAvatar();
+
+            setTimeout(() => {
+                feedback.innerText = "";
+                if (currentQuestion < TOTAL_QUESTIONS) {
+                    currentQuestion++;
+                    generateQuestion();
+                } else {
+                    showFinalResult();
+                }
+            }, 1000);
+        }
+
+        function updateAvatar() {
+            const avatarElem = document.getElementById('avatarIcon');
+            if (correctCount < 4) avatarElem.innerText = avatars[0];
+            else if (correctCount < 8) avatarElem.innerText = avatars[1];
+            else if (correctCount < 12) avatarElem.innerText = avatars[2];
+            else if (correctCount < 16) avatarElem.innerText = avatars[3];
+            else if (correctCount < 19) avatarElem.innerText = avatars[4];
+            else avatarElem.innerText = avatars[6];
+        }
+
+        async function showFinalResult() {
+            document.getElementById('quizScreen').classList.remove('active-screen');
+            document.getElementById('resultScreen').classList.add('active-screen');
+
+            document.getElementById('finalScore').innerText = score;
+            document.getElementById('finalAvatar').innerText = document.getElementById('avatarIcon').innerText;
+
+            const accuracy = Math.round((correctCount / TOTAL_QUESTIONS) * 100);
+            document.getElementById('resultDetails').innerHTML = `
+                Siswa: <b>${selectedStudentName}</b><br>
+                Jawaban Benar: <b>${correctCount} / ${TOTAL_QUESTIONS}</b><br>
+                Akurasi: <b>${accuracy}%</b>
+            `;
+
+            await saveScoreToSheet(selectedStudentName, score);
+        }
+
+        async function saveScoreToSheet(name, scoreValue) {
+            const statusElem = document.getElementById('savingStatus');
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    // Mengirimkan quizType: "cerita" agar skor masuk ke Kolom D
+                    body: JSON.stringify({ name: name, score: scoreValue, quizType: "cerita" })
+                });
+
+                statusElem.innerText = "✅ Skor berhasil disimpan ke Google Sheets (Kolom D)!";
+                statusElem.style.color = "#00ff88";
+            } catch (err) {
+                console.error(err);
+                statusElem.innerText = "⚠️ Gagal menyimpan skor otomatis.";
+                statusElem.style.color = "#ff3366";
+            }
+        }
+
+        window.onload = () => {
+            createStars();
+            fetchStudentNames();
+        };
+    </script>
+</body>
+</html>
