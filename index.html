@@ -21,13 +21,14 @@
             justify-content: center;
             align-items: center;
             color: #004d40;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
+            padding: 20px 0;
         }
 
         /* Ambient Underwater Container */
         .ocean-container {
-            position: absolute;
+            position: fixed;
             width: 100%;
             height: 100%;
             top: 0;
@@ -37,12 +38,13 @@
         }
 
         .sunbeam {
-            position: absolute;
+            position: fixed;
             top: -50px;
             width: 100%;
             height: 300px;
             background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%);
             z-index: 2;
+            pointer-events: none;
         }
 
         .bubble {
@@ -60,11 +62,12 @@
         }
 
         .fish {
-            position: absolute;
+            position: fixed;
             font-size: 28px;
             z-index: 3;
             animation: swim linear infinite;
             filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
+            pointer-events: none;
         }
 
         @keyframes swim {
@@ -75,16 +78,17 @@
         }
 
         .sea-bed {
-            position: absolute;
+            position: fixed;
             bottom: 0;
             width: 100%;
             height: 120px;
             background: linear-gradient(0deg, #ffe082 0%, rgba(255, 224, 130, 0) 100%);
             z-index: 2;
+            pointer-events: none;
         }
 
         .coral-group {
-            position: absolute;
+            position: fixed;
             bottom: 0;
             width: 100%;
             display: flex;
@@ -93,6 +97,7 @@
             z-index: 2;
             padding: 0 20px;
             font-size: 45px;
+            pointer-events: none;
         }
 
         .sea-plant {
@@ -111,9 +116,8 @@
             100% { transform: rotate(8deg); }
         }
 
-        /* Container Kejutan (Bintang & Pita Emas) */
         #celebrationContainer {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -130,17 +134,11 @@
         }
 
         @keyframes fall {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(105vh) rotate(360deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Game Card Styling */
+        /* Game Card & Layout Styling */
         .game-card {
             position: relative;
             z-index: 10;
@@ -151,8 +149,10 @@
             border-radius: 28px;
             padding: 25px;
             width: 90%;
-            max-width: 480px;
+            max-width: 580px;
             text-align: center;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .header-section {
@@ -198,12 +198,13 @@
 
         .title {
             font-family: 'Fredoka', sans-serif;
-            font-size: 26px;
-            letter-spacing: 1px;
+            font-size: 22px;
+            letter-spacing: 0.5px;
             color: #00695c;
             margin-bottom: 10px;
             text-transform: uppercase;
             text-shadow: 1px 1px 0px #ffffff;
+            line-height: 1.3;
         }
 
         .progress-text {
@@ -333,6 +334,53 @@
             background: linear-gradient(135deg, #26a69a, #00796b);
             color: #ffffff;
             box-shadow: 0 6px 16px rgba(0, 121, 107, 0.3);
+            margin-bottom: 12px;
+        }
+
+        /* Download Action Buttons Area */
+        .download-action-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .btn-download {
+            flex: 1;
+            padding: 10px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 12px;
+            border: 2px solid #0097a7;
+            background: #ffffff;
+            color: #00695c;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+        }
+
+        .btn-download:hover {
+            background: #e0f7fa;
+            transform: translateY(-2px);
+            color: #004d40;
+        }
+
+        .btn-back {
+            background: #ffffff;
+            color: #00796b;
+            border: 2px solid #26a69a;
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-back:hover {
+            background: #e0f7fa;
+            transform: translateY(-1px);
         }
 
         .feedback {
@@ -371,6 +419,79 @@
             font-weight: bold;
         }
 
+        /* Vocabulary Screen Styling */
+        #vocabScreen {
+            background: radial-gradient(circle at top, rgba(224, 247, 250, 0.8) 0%, rgba(178, 235, 242, 0.4) 100%);
+            border-radius: 20px;
+            padding: 10px;
+        }
+
+        .vocab-category-title {
+            font-family: 'Fredoka', sans-serif;
+            color: #004d40;
+            font-size: 16px;
+            margin: 15px 0 8px 0;
+            text-align: left;
+            border-bottom: 2px dashed #4dd0e1;
+            padding-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .vocab-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #b2ebf2;
+            border-radius: 12px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 6px rgba(0,77,64,0.06);
+            position: relative;
+        }
+
+        .vocab-card:hover {
+            transform: translateY(-3px) scale(1.02);
+            border-color: #26c6da;
+            background: #ffffff;
+            box-shadow: 0 6px 12px rgba(0,151,167,0.15);
+        }
+
+        .vocab-word {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 15px;
+            color: #00695c;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .vocab-ipa {
+            font-size: 11px;
+            color: #00897b;
+            font-style: italic;
+            margin-top: 2px;
+        }
+
+        .vocab-meaning {
+            font-size: 12px;
+            color: #004d40;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .speaker-icon {
+            font-size: 13px;
+        }
+
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             20%, 60% { transform: translateX(-10px); }
@@ -378,6 +499,52 @@
         }
 
         .shake { animation: shake 0.4s ease-in-out; }
+
+        /* Print Printable Worksheet View Hide Rules */
+        .printable-questions { display: none; }
+
+        @media print {
+            body { background: #ffffff !important; color: #000000 !important; }
+            .sunbeam, .ocean-container, .sea-bed, .coral-group, .fish, #celebrationContainer, .btn, .btn-start, .btn-download, .btn-back, #loginScreen, #quizScreen, #resultScreen {
+                display: none !important;
+            }
+            .game-card {
+                box-shadow: none !important;
+                border: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                max-height: none !important;
+                overflow: visible !important;
+                background: none !important;
+                padding: 0 !important;
+            }
+            .speaker-icon { display: none !important; }
+            .vocab-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; }
+            .vocab-card { border: 1px solid #ccc !important; page-break-inside: avoid; }
+            
+            /* Print Mode Specifics */
+            body.print-questions .printable-questions { display: block !important; }
+            body.print-questions #vocabScreen { display: none !important; }
+            body.print-vocab #vocabScreen { display: block !important; }
+            
+            .print-question-item {
+                margin-bottom: 15px;
+                page-break-inside: avoid;
+                text-align: left;
+                font-size: 14px;
+            }
+            .print-options-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 5px;
+                margin-top: 5px;
+            }
+            .print-option {
+                border: 1px solid #aaa;
+                padding: 4px 8px;
+                border-radius: 4px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -386,7 +553,6 @@
     <div class="ocean-container" id="bubblesContainer"></div>
     <div class="sea-bed"></div>
     
-    <!-- Elemen Efek Kejutan -->
     <div id="celebrationContainer"></div>
 
     <div class="coral-group">
@@ -406,8 +572,30 @@
 
     <div class="game-card" id="gameCard">
         
+        <!-- VOCABULARY STUDY SCREEN -->
+        <div id="vocabScreen" class="screen active-screen">
+            <h1 class="title">SILAHKAN HAFALKAN TERLEBIH DAHULU KOSA-KATA BERIKUT INI</h1>
+            <button type="button" class="btn btn-start" onclick="goToLoginScreen()" id="vocabNavBtn">LANJUT KE SOAL ATAU GAME 🚀</button>
+            
+            <!-- TOMBOL DOWNLOAD TERAMPIL DI BAWAH JUDUL / LANJUT KE SOAL -->
+            <div class="download-action-group">
+                <button type="button" class="btn-download" onclick="downloadVocab()">📥 DOWNLOAD KOSA KATA (PDF/PRINT)</button>
+                <button type="button" class="btn-download" onclick="downloadQuestions()">📄 DOWNLOAD LEMBAR SOAL (PDF/PRINT)</button>
+            </div>
+
+            <p style="font-size: 12px; color: #00796b; margin-bottom: 5px;">*Klik kartu kata untuk mendengarkan cara bacanya!</p>
+            
+            <div id="vocabContainer"></div>
+        </div>
+
+        <!-- PRINTABLE QUESTIONS CONTAINER (FOR PRINT PDF ONLY) -->
+        <div class="printable-questions" id="printableQuestions">
+            <h2 style="text-align: center; margin-bottom: 20px;">AQUA ADJECTIVES QUEST - LEMBAR SOAL</h2>
+            <div id="printQuestionsList"></div>
+        </div>
+
         <!-- LOGIN SCREEN -->
-        <div id="loginScreen" class="screen active-screen">
+        <div id="loginScreen" class="screen">
             <div class="avatar" style="margin: 0 auto 15px auto; width: 75px; height: 75px; font-size: 40px;">🥽</div>
             <h1 class="title">AQUA ADJECTIVES</h1>
             <p style="color: #00695c; margin-bottom: 20px; font-size: 14px; font-weight: 600;">Pilih namamu sebelum menyelam ke taman laut!</p>
@@ -431,7 +619,10 @@
                 </div>
             </div>
 
-            <div class="progress-text" id="progressText">SOAL 1 DARI 20</div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <button type="button" class="btn-back" onclick="openVocabFromQuiz()">📚 Kosa Kata</button>
+                <div class="progress-text" id="progressText" style="margin-bottom:0;">SOAL 1 DARI 20</div>
+            </div>
 
             <div class="question-box">
                 <img id="questionImage" class="question-img" src="" alt="Gambar Soal" style="display: none;" />
@@ -465,128 +656,119 @@
         const TOTAL_QUESTIONS = 20;
         const POINTS_PER_QUESTION = 5;
 
-        // 20 SOAL BERBEDA (TIDAK ADA GAMBAR/TEMA/KATA SIFAT YANG SAMA)
+        // DATA KOSA KATA LENGKAP: ADJECTIVES, NOUNS, & VERBS/OTHER
+        const vocabularyData = {
+            adjectives: [
+                { word: "Angry", ipa: "/ˈæŋɡri/", meaning: "Marah" },
+                { word: "Big", ipa: "/bɪɡ/", meaning: "Besar" },
+                { word: "Bitter", ipa: "/ˈbɪtər/", meaning: "Pahit" },
+                { word: "Black", ipa: "/blæk/", meaning: "Hitam" },
+                { word: "Blue", ipa: "/bluː/", meaning: "Biru" },
+                { word: "Bored", ipa: "/bɔːrd/", meaning: "Bosan" },
+                { word: "Brave", ipa: "/breɪv/", meaning: "Berani" },
+                { word: "Clean", ipa: "/kliːn/", meaning: "Bersih" },
+                { word: "Cold", ipa: "/koʊld/", meaning: "Dingin" },
+                { word: "Cute", ipa: "/kjuːt/", meaning: "Imut / Lucu" },
+                { word: "Dark", ipa: "/dɑːrk/", meaning: "Gelap" },
+                { word: "Deep", ipa: "/diːp/", meaning: "Dalam" },
+                { word: "Dirty", ipa: "/ˈdɜːrti/", meaning: "Kotor" },
+                { word: "Dry", ipa: "/draɪ/", meaning: "Kering" },
+                { word: "Dusty", ipa: "/ˈdʌsti/", meaning: "Berdebu" },
+                { word: "Fast", ipa: "/fæst/", meaning: "Cepat" },
+                { word: "Fat", ipa: "/fæt/", meaning: "Gemuk" },
+                { word: "Fluffy", ipa: "/ˈflʌfi/", meaning: "Empuk / Berbulu" },
+                { word: "Green", ipa: "/ɡriːn/", meaning: "Hijau" },
+                { word: "Happy", ipa: "/ˈhæpi/", meaning: "Senang" },
+                { word: "Hard", ipa: "/hɑːrd/", meaning: "Keras" },
+                { word: "Heavy", ipa: "/ˈhevi/", meaning: "Berat" },
+                { word: "Hot", ipa: "/hɑːt/", meaning: "Panas" },
+                { word: "Hungry", ipa: "/ˈhʌŋɡri/", meaning: "Lapar" },
+                { word: "Light", ipa: "/laɪt/", meaning: "Ringan" },
+                { word: "Long", ipa: "/lɔːŋ/", meaning: "Panjang" },
+                { word: "Loud", ipa: "/laʊd/", meaning: "Keras (Suara)" },
+                { word: "Low", ipa: "/loʊ/", meaning: "Rendah" },
+                { word: "Narrow", ipa: "/ˈnær.oʊ/", meaning: "Sempit" },
+                { word: "Pink", ipa: "/pɪŋk/", meaning: "Merah Muda" },
+                { word: "Purple", ipa: "/ˈpɜːrpəl/", meaning: "Ungu" },
+                { word: "Quick", ipa: "/kwɪk/", meaning: "Cepat" },
+                { word: "Quiet", ipa: "/ˈkwaɪət/", meaning: "Tenang / Diam" },
+                { word: "Red", ipa: "/red/", meaning: "Merah" },
+                { word: "Sad", ipa: "/sæd/", meaning: "Sedih" },
+                { word: "Salty", ipa: "/ˈsɔːlti/", meaning: "Asin" },
+                { word: "Scared", ipa: "/skeərd/", meaning: "Takut" },
+                { word: "Scary", ipa: "/ˈskeri/", meaning: "Menakutkan" },
+                { word: "Shallow", ipa: "/ˈʃæl.oʊ/", meaning: "Dangkal" },
+                { word: "Sharp", ipa: "/ʃɑːrp/", meaning: "Tajam" },
+                { word: "Short", ipa: "/ʃɔːrt/", meaning: "Pendek" },
+                { word: "Sleepy", ipa: "/ˈsliːpi/", meaning: "Mengantuk" },
+                { word: "Slow", ipa: "/sloʊ/", meaning: "Lambat" },
+                { word: "Small", ipa: "/smɔːl/", meaning: "Kecil" },
+                { word: "Smooth", ipa: "/smuːð/", meaning: "Halus" },
+                { word: "Soft", ipa: "/sɔːft/", meaning: "Lembut" },
+                { word: "Sour", ipa: "/saʊər/", meaning: "Asam" },
+                { word: "Spicy", ipa: "/ˈspaɪsi/", meaning: "Pedas" },
+                { word: "Sweet", ipa: "/swiːt/", meaning: "Manis" },
+                { word: "Tall", ipa: "/tɔːl/", meaning: "Tinggi" },
+                { word: "Thick", ipa: "/θɪk/", meaning: "Tebal" },
+                { word: "Thin", ipa: "/θɪn/", meaning: "Tipis / Kurus" },
+                { word: "Ugly", ipa: "/ˈʌɡli/", meaning: "Jelek" },
+                { word: "Weak", ipa: "/wiːk/", meaning: "Lemah" },
+                { word: "Yellow", ipa: "/ˈjel.oʊ/", meaning: "Kuning" }
+            ],
+            nouns: [
+                { word: "Apple", ipa: "/ˈæp.əl/", meaning: "Apel" },
+                { word: "Baby", ipa: "/ˈbeɪ.bi/", meaning: "Bayi" },
+                { word: "Banana", ipa: "/bəˈnæn.ə/", meaning: "Pisang" },
+                { word: "Book", ipa: "/bʊk/", meaning: "Buku" },
+                { word: "Boy", ipa: "/bɔɪ/", meaning: "Anak Laki-laki" },
+                { word: "Candy", ipa: "/ˈkæn.di/", meaning: "Permen" },
+                { word: "Cat", ipa: "/kæt/", meaning: "Kucing" },
+                { word: "Cheetah", ipa: "/ˈtʃiː.tə/", meaning: "Cheetah (Macan Tutul)" },
+                { word: "Elephant", ipa: "/ˈel.ɪ.fənt/", meaning: "Gajah" },
+                { word: "Feather", ipa: "/ˈfeð.ər/", meaning: "Bulu" },
+                { word: "Giraffe", ipa: "/dʒɪˈræf/", meaning: "Jerapah" },
+                { word: "Ice cream", ipa: "/ˈaɪs ˌkriːm/", meaning: "Es Krim" },
+                { word: "Lemon", ipa: "/ˈlem.ən/", meaning: "Lemon" },
+                { word: "Mouse", ipa: "/maʊs/", meaning: "Tikus" },
+                { word: "Ocean", ipa: "/ˈoʊ.ʃən/", meaning: "Lautan" },
+                { word: "Rabbit", ipa: "/ˈræb.ɪt/", meaning: "Kelinci" },
+                { word: "Stone", ipa: "/stoʊn/", meaning: "Batu" },
+                { word: "Sun", ipa: "/sʌn/", meaning: "Matahari" },
+                { word: "Turtle", ipa: "/ˈtɜːr.təl/", meaning: "Kura-kura" },
+                { word: "Water", ipa: "/ˈwɔː.tər/", meaning: "Air" }
+            ],
+            verbsOther: [
+                { word: "Feel / Feels", ipa: "/fiːlz/", meaning: "Merasa" },
+                { word: "Look at", ipa: "/lʊk æt/", meaning: "Lihatlah" },
+                { word: "Move / Moves", ipa: "/muːvz/", meaning: "Bergerak" },
+                { word: "Run / Running", ipa: "/ˈrʌn.ɪŋ/", meaning: "Berlari" },
+                { word: "Smile / Smiling", ipa: "/ˈsmaɪ.lɪŋ/", meaning: "Tersenyum" },
+                { word: "Taste / Tastes", ipa: "/teɪsts/", meaning: "Rasa / Rasanya" },
+                { word: "What", ipa: "/wɑːt/", meaning: "Apa" }
+            ]
+        };
+
         const questionBank = [
-            {
-    text: "Look at the elephant. The elephant is _____.",
-    image: "https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?w=400&q=80",
-    options: ["Small", "Short", "Big", "Thin"],
-    answer: "Big"
-},
-{
-    text: "Look at the mouse. The mouse is _____.",
-    image: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=400&q=80",
-    options: ["Tall", "Small", "Fat", "Long"],
-    answer: "Small"
-},
-{
-    text: "Look at the giraffe. The giraffe is _____.",
-    image: "https://images.unsplash.com/photo-1547721064-da6cfb341d50?w=400&q=80",
-    options: ["Heavy", "Low", "Short", "Tall"],
-    answer: "Tall"
-},
-{
-    text: "Look at the smiling boy. He feels _____.",
-    image: "bayi.jpg",
-    options: ["Happy", "Sad", "Angry", "Scared"],
-    answer: "Happy"
-},
-{
-    text: "Look at the apple. What color is it?",
-    image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&q=80",
-    options: ["Green", "Yellow", "Red", "Blue"],
-    answer: "Red"
-},
-{
-    text: "Look at the ice cream. Ice cream is _____.",
-    image: "krim.jpg",
-    options: ["Hard", "Cold", "Dry", "Hot"],
-    answer: "Cold"
-},
-{
-    text: "Look at the bright sun. The sun is _____.",
-    image: "matahari.jpg",
-    options: ["Dark", "Soft", "Cold", "Hot"],
-    answer: "Hot"
-},
-{
-    text: "Look at the fluffy rabbit. The rabbit is _____.",
-    image: "https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=400&q=80",
-    options: ["Cute", "Scary", "Dirty", "Ugly"],
-    answer: "Cute"
-},
-{
-    text: "Look at the turtle. The turtle moves _____.",
-    image: "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=400&q=80",
-    options: ["Fast", "Loud", "Slow", "Quick"],
-    answer: "Slow"
-},
-{
-    text: "Look at the running cheetah. The cheetah is _____.",
-    image: "https://images.unsplash.com/photo-1534188753412-3e26d0d618d6?w=400&q=80",
-    options: ["Quiet", "Fast", "Weak", "Slow"],
-    answer: "Fast"
-},
-{
-    text: "Look at the fresh banana. What color is it?",
-    image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400&q=80",
-    options: ["Black", "Purple", "Pink", "Yellow"],
-    answer: "Yellow"
-},
-{
-    text: "Look at the clear water. The water is _____.",
-    image: "air.jpg",
-    options: ["Clean", "Black", "Dusty", "Dirty"],
-    answer: "Clean"
-},
-{
-    text: "Look at the cute cat. The cat is _____.",
-    image: "cat.jpg",
-    options: ["Hungry", "Sleepy", "Loud", "Bored"],
-    answer: "Sleepy"
-},
-{
-    text: "Look at the lemon. Lemon tastes _____.",
-    image: "lemon.png",
-    options: ["Sweet", "Spicy", "Sour", "Salty"],
-    answer: "Sour"
-},
-{
-    text: "Look at the feather. A feather is _____.",
-    image: "bulu.jpg",
-    options: ["Sharp", "Heavy", "Hard", "Light"],
-    answer: "Light"
-},
-{
-    text: "Look at the thick book. The book is _____.",
-    image: "buku.jpg",
-    options: ["Thick", "Small", "Short", "Thin"],
-    answer: "Thick"
-},
-{
-    text: "Look at the blue ocean. The ocean is _____.",
-    image: "laut.jpg",
-    options: ["Dry", "Narrow", "Deep", "Shallow"],
-    answer: "Deep"
-},
-{
-    text: "Look at the stone. The stone is _____.",
-    image: "batu.jpg",
-    options: ["Soft", "Hard", "Smooth", "Fluffy"],
-    answer: "Hard"
-},
-{
-    text: "Look at the crying baby. The baby is _____.",
-    image: "sedih.jpg",
-    options: ["Brave", "Quiet", "Happy", "Sad"],
-    answer: "Sad"
-},
-{
-    text: "Look at the candy. The candy is _____.",
-    image: "permen.jpg",
-    options: ["Sweet", "Bitter", "Salty", "Sour"],
-    answer: "Sweet"
-}
+            { text: "Look at the elephant. The elephant is _____.", image: "https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?w=400&q=80", options: ["Small", "Short", "Big", "Thin"], answer: "Big" },
+            { text: "Look at the mouse. The mouse is _____.", image: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=400&q=80", options: ["Tall", "Small", "Fat", "Long"], answer: "Small" },
+            { text: "Look at the giraffe. The giraffe is _____.", image: "https://images.unsplash.com/photo-1547721064-da6cfb341d50?w=400&q=80", options: ["Heavy", "Low", "Short", "Tall"], answer: "Tall" },
+            { text: "Look at the smiling boy. He feels _____.", image: "bayi.jpg", options: ["Happy", "Sad", "Angry", "Scared"], answer: "Happy" },
+            { text: "Look at the apple. What color is it?", image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&q=80", options: ["Green", "Yellow", "Red", "Blue"], answer: "Red" },
+            { text: "Look at the ice cream. Ice cream is _____.", image: "krim.jpg", options: ["Hard", "Cold", "Dry", "Hot"], answer: "Cold" },
+            { text: "Look at the bright sun. The sun is _____.", image: "matahari.jpg", options: ["Dark", "Soft", "Cold", "Hot"], answer: "Hot" },
+            { text: "Look at the fluffy rabbit. The rabbit is _____.", image: "https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=400&q=80", options: ["Cute", "Scary", "Dirty", "Ugly"], answer: "Cute" },
+            { text: "Look at the turtle. The turtle moves _____.", image: "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=400&q=80", options: ["Fast", "Loud", "Slow", "Quick"], answer: "Slow" },
+            { text: "Look at the running cheetah. The cheetah is _____.", image: "https://images.unsplash.com/photo-1534188753412-3e26d0d618d6?w=400&q=80", options: ["Quiet", "Fast", "Weak", "Slow"], answer: "Fast" },
+            { text: "Look at the fresh banana. What color is it?", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400&q=80", options: ["Black", "Purple", "Pink", "Yellow"], answer: "Yellow" },
+            { text: "Look at the clear water. The water is _____.", image: "air.jpg", options: ["Clean", "Black", "Dusty", "Dirty"], answer: "Clean" },
+            { text: "Look at the cute cat. The cat is _____.", image: "cat.jpg", options: ["Hungry", "Sleepy", "Loud", "Bored"], answer: "Sleepy" },
+            { text: "Look at the lemon. Lemon tastes _____.", image: "lemon.png", options: ["Sweet", "Spicy", "Sour", "Salty"], answer: "Sour" },
+            { text: "Look at the feather. A feather is _____.", image: "bulu.jpg", options: ["Sharp", "Heavy", "Hard", "Light"], answer: "Light" },
+            { text: "Look at the thick book. The book is _____.", image: "buku.jpg", options: ["Thick", "Small", "Short", "Thin"], answer: "Thick" },
+            { text: "Look at the blue ocean. The ocean is _____.", image: "laut.jpg", options: ["Dry", "Narrow", "Deep", "Shallow"], answer: "Deep" },
+            { text: "Look at the stone. The stone is _____.", image: "batu.jpg", options: ["Soft", "Hard", "Smooth", "Fluffy"], answer: "Hard" },
+            { text: "Look at the crying baby. The baby is _____.", image: "sedih.jpg", options: ["Brave", "Quiet", "Happy", "Sad"], answer: "Sad" },
+            { text: "Look at the candy. The candy is _____.", image: "permen.jpg", options: ["Sweet", "Bitter", "Salty", "Sour"], answer: "Sweet" }
         ];
 
         let selectedStudentName = "";
@@ -594,10 +776,105 @@
         let selectedOption = null;
         let score = 0;
         let correctCount = 0;
+        let comingFromQuiz = false;
 
         const avatars = ["🥽", "🐠", "🐙", "🐬", "🦈", "🧜‍♂️", "🏆"];
 
-        /* Audio Synthesis untuk Suara Benar & Salah */
+        function renderVocabulary() {
+            const container = document.getElementById('vocabContainer');
+            container.innerHTML = '';
+
+            const categories = [
+                { title: "✨ Kata Sifat (Adjectives)", data: vocabularyData.adjectives },
+                { title: "🐾 Kata Benda (Nouns)", data: vocabularyData.nouns },
+                { title: "🏃 Kata Kerja & Lainnya (Verbs & Words)", data: vocabularyData.verbsOther }
+            ];
+
+            categories.forEach(cat => {
+                const catTitle = document.createElement('div');
+                catTitle.className = 'vocab-category-title';
+                catTitle.innerText = cat.title;
+                container.appendChild(catTitle);
+
+                const grid = document.createElement('div');
+                grid.className = 'vocab-grid';
+
+                cat.data.sort((a, b) => a.word.localeCompare(b.word)).forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'vocab-card';
+                    card.onclick = () => speakWord(item.word);
+                    card.innerHTML = `
+                        <div class="vocab-word">
+                            ${item.word} <span class="speaker-icon">🔊</span>
+                        </div>
+                        <div class="vocab-ipa">${item.ipa}</div>
+                        <div class="vocab-meaning">${item.meaning}</div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                container.appendChild(grid);
+            });
+        }
+
+        function buildPrintableQuestions() {
+            const printList = document.getElementById('printQuestionsList');
+            printList.innerHTML = '';
+
+            const labels = ['A', 'B', 'C', 'D'];
+
+            questionBank.forEach((q, idx) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'print-question-item';
+
+                let optionsHtml = q.options.map((opt, oIdx) => `<div class="print-option">${labels[oIdx]}. ${opt}</div>`).join('');
+
+                qDiv.innerHTML = `
+                    <div><b>${idx + 1}. ${q.text}</b></div>
+                    <div class="print-options-grid">${optionsHtml}</div>
+                `;
+                printList.appendChild(qDiv);
+            });
+        }
+
+        function downloadVocab() {
+            document.body.classList.remove('print-questions');
+            document.body.classList.add('print-vocab');
+            window.print();
+        }
+
+        function downloadQuestions() {
+            document.body.classList.remove('print-vocab');
+            document.body.classList.add('print-questions');
+            window.print();
+        }
+
+        function speakWord(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.8;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function openVocabFromQuiz() {
+            comingFromQuiz = true;
+            document.getElementById('vocabNavBtn').innerText = "KEMBALI KE SOAL 🎯";
+            document.getElementById('quizScreen').classList.remove('active-screen');
+            document.getElementById('vocabScreen').classList.add('active-screen');
+        }
+
+        function goToLoginScreen() {
+            if (comingFromQuiz) {
+                document.getElementById('vocabScreen').classList.remove('active-screen');
+                document.getElementById('quizScreen').classList.add('active-screen');
+            } else {
+                document.getElementById('vocabScreen').classList.remove('active-screen');
+                document.getElementById('loginScreen').classList.add('active-screen');
+            }
+        }
+
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
         function playSound(type) {
@@ -611,8 +888,8 @@
 
             if (type === 'correct') {
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
-                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.3); // A5
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.3);
                 gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
                 osc.start();
@@ -628,7 +905,6 @@
             }
         }
 
-        /* Efek Kejutan: Bintang & Pita Emas Jatuh */
         function triggerCelebration() {
             const container = document.getElementById('celebrationContainer');
             const items = ['⭐', '🌟', '✨', '🎗️', '🎀', '🥇'];
@@ -843,6 +1119,8 @@
 
         window.onload = () => {
             createBubbles();
+            renderVocabulary();
+            buildPrintableQuestions();
             fetchStudentNames();
         };
     </script>
